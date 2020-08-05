@@ -15,6 +15,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +28,10 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     FormsModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireAnalyticsModule,
+    AngularFirestoreModule,
+    
   ],
   providers: [
     StatusBar,

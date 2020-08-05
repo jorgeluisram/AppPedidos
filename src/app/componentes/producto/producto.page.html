@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="goBack()">Regresar</ion-button>
+  <br>
+  <ion-toolbar color="light">
+    <ion-title>Ingresar Nuevo Producto</ion-title>
+ 
+    <section>
+    <ion-item>
+      <ion-label position="stacked"><strong>Ingresar Nuevo Producto</strong> </ion-label>
+      <ion-input placeholder="Nombre del producto" [(ngModel)]="item.Producto"></ion-input>
+      <ion-input placeholder="Presentacion del producto" [(ngModel)]="item.Presentacion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="item.Estado">
+        <ion-select-option value="Activo">Activo</ion-select-option>
+        <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button (click)="Agregar()">Guardar</ion-button>
+  </section>
+  <br>
+</ion-toolbar>
+<ion-toolbar color="primary">
+  <ion-title>Lista de productos</ion-title>
+
+  <ion-card *ngFor="let item of items">
+    <ion-item>
+      <ion-label>{{item.Producto}}</ion-label>
+      <tr><ion-button fill="outline" slot="end"  (click)="edit(item)"  (click)="OpenModal(item)" >Editar </ion-button>
+        <ion-button color="danger" (click)="delete(item.id)">Eliminar</ion-button></tr>
+     </ion-item>
+    <ion-card-content>
+      <tr>
+       <td><strong>Presentacion del producto </strong>  </td> 
+      </tr>
+      <tr>
+        {{item.Presentacion}}
+      </tr>
+      <tr><td><strong>Estado del producto</strong> </td> 
+      </tr>
+      <tr>
+        {{item.Estado}}
+      </tr>
+    </ion-card-content>
+  </ion-card>
+</ion-toolbar>
+
+   <ng-template #mymodal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form (ngSubmit)="EditForm()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="">Producto</label>
+              <input type="text" class="form-control" name="Producto" [(ngModel)]="itemEdit.Producto">
+              <label for="">Presentacion</label>
+              <input type="text" class="form-control" name="Presentacion" [(ngModel)]="itemEdit.Presentacion">
+
+    
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark" >Guardar</button>
+            <button class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+          </div>
+        </form>
+      </ng-template>
+
+</ion-content>

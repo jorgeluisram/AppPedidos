@@ -1,0 +1,25 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Editar Producto</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-item>
+    <ion-label position="stacked">Producto <ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required type="text" [(ngModel)]="item.Producto"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Presentacion <ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required type="text" [(ngModel)]="item.Presentacion"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Estado</ion-label>
+    <ion-select [(ngModel)]="item.Estado">
+      <ion-select-option value="Activo">Activo</ion-select-option>
+      <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
