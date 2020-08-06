@@ -1,4 +1,5 @@
-import { Item } from './../../services/con.service';
+import { Item } from './../../service/query.service';
+
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
 

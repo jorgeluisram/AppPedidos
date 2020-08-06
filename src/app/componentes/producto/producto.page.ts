@@ -1,9 +1,10 @@
+import { QueryService } from './../../service/query.service';
 //import { ModalInputComponent } from './../modal-input/modal-input.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { ConService } from '../../services/con.service'
+
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';//modal
 import { ModalController } from '@ionic/angular';
 import { ModalInputComponent } from '../modal-input/modal-input.component';
@@ -25,7 +26,7 @@ export class ProductoPage implements OnInit {
   closeResult: string;
   constructor(
     private router: Router,
-    private con:ConService,
+    private con:QueryService,
     public firestore: AngularFirestore,
     private modalService: NgbModal,
     public ModalController: ModalController
