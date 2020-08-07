@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Administración de usuarios</ion-title>
+    <ion-title style="text-align: center;">Administración de<br> usuarios</ion-title>
     
   </ion-toolbar>
   
@@ -10,7 +10,19 @@
   <section>
     <header></header>
     <br>
-    <ion-button (click)="goBack()">Regresar</ion-button>
+    
+    <ion-icon name="arrow-back-circle-outline" style="font-size: 50px;" (click)="goBack()"></ion-icon>
+
    
   </section>
+
+  <ion-item>
+    <ion-label position="floating">Correo electrónico</ion-label>
+    <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Contraseña</ion-label>
+    <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
+  <ion-button (click)="signup()">Agregar</ion-button>
 </ion-content>

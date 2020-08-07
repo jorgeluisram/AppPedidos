@@ -13,8 +13,8 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {}
   goProduct() {
-debugger
-      this.router.navigate(['/producto']);
+
+          this.router.navigate(['/producto']);
    
   }
   goUser() {

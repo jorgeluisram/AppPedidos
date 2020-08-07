@@ -21,7 +21,7 @@ export class ModalInputComponent implements OnInit {
     this.ModalController.dismiss();
   }
   handleFirstNameValue(event) {
-    debugger
+    
     this.item = event.target.value;
   }
 

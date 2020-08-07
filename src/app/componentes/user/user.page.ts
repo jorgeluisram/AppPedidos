@@ -12,6 +12,6 @@ export class UserPage implements OnInit {
   ngOnInit() {
   }
   
- asd(){debugger
+ asd(){
 console.log('Hola')}
 }

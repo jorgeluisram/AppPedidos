@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -8,18 +9,36 @@ import { Observable } from 'rxjs';
 export class AuthService {
   user: Observable<firebase.User>;
 
-  constructor(private firebaseAuth: AngularFireAuth) {
+  constructor(private firebaseAuth: AngularFireAuth,
+            public ToastControlleroller: ToastController) {
     this.user = firebaseAuth.authState;
   }
 
   signup(email: string, password: string) {
-    this.firebaseAuth.createUserWithEmailAndPassword(email, password)
+     this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
+        this.presentAlert('El usuario Fue creado exitosamente');
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
-      });
+      });  
+
+     /* this.firebaseAuth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      }); */
+  }
+
+  async presentAlert(message) {
+    const toast = await this.ToastControlleroller.create({
+      color: 'success',
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 
   login(email: string, password: string) {
