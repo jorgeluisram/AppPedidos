@@ -18,10 +18,11 @@ export class AuthService {
      this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
-        this.presentAlert('El usuario Fue creado exitosamente');
+        this.presentAlert('El usuario Fue creado exitosamente','true');
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
+        this.presentAlert('Intente nuevamente','');
       });  
 
      /* this.firebaseAuth.createUserWithEmailAndPassword(email, password).catch(function(error) {
@@ -32,10 +33,11 @@ export class AuthService {
       }); */
   }
 
-  async presentAlert(message) {
+  async presentAlert(message,type) {
     const toast = await this.ToastControlleroller.create({
-      color: 'success',
+      color: type =='true'?'success':"danger",
       message: message,
+      position: 'top',
       duration: 3000
     });
     toast.present();

@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';//modal
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { ModalInputComponent } from '../modal-input/modal-input.component';
 
 
@@ -24,12 +24,15 @@ export class ProductoPage implements OnInit {
   item:any={Producto:'',
             Presentacion:''};
   closeResult: string;
+ 
   constructor(
     private router: Router,
     private con:QueryService,
     public firestore: AngularFirestore,
     private modalService: NgbModal,
-    public ModalController: ModalController
+    public ModalController: ModalController,
+    public loadingController: LoadingController,
+    public alertController: AlertController
     ) { 
      
     
@@ -37,16 +40,62 @@ export class ProductoPage implements OnInit {
 
   ngOnInit() {
     this.getdata()
+    //this.presentLoading();
   }
 
-  getdata(){
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere',
+      
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Cargado');
+  }
+
+  async getdata(){
     //this.items = this.firestore.collection('producto').valueChanges();
-    this.con.retornalItems().subscribe(items=>{
+    //encendido
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere',
+      
+    });
+    await loading.present();
+    this.con.retornalItems().subscribe(async items=>{
+      if(items.length==0){}
       this.items=items;
-      this.processdata();
+      await loading.dismiss() //apagado
+      //this.processdata();
       console.log(this.items)
     })
   
+  }
+
+  async  DeleteButton(id,product) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar Producto',
+      message: 'Desea eliminar el producto "'+product+'" de la lista productos',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'Cancelar',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.delete(id)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   processdata(){

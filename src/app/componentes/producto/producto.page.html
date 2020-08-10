@@ -35,7 +35,8 @@
     <ion-item>
       <ion-label>{{item.Producto}}</ion-label>
       <tr><ion-button fill="outline" slot="end"  (click)="edit(item)"  (click)="OpenModal(item)" >Editar </ion-button>
-        <ion-button color="danger" (click)="delete(item.id)">Eliminar</ion-button></tr>
+        <!-- <ion-button color="danger" (click)="delete(item.id)">Eliminar</ion-button></tr> -->
+        <ion-button color="danger" (click)="DeleteButton(item.id,item.Producto)">Eliminar</ion-button></tr>
      </ion-item>
     <ion-card-content>
       <tr>

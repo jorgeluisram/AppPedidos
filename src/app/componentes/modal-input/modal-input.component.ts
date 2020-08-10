@@ -1,4 +1,4 @@
-import { Item } from './../../service/query.service';
+import { Item, QueryService } from './../../service/query.service';
 
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
@@ -10,19 +10,22 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ModalInputComponent implements OnInit {
   @Input()item:Item;
-  constructor(public ModalController:ModalController) { }
+  
+  constructor(public ModalController:ModalController,
+              private con:QueryService,) { }
 
   ngOnInit() {
     this.item
     
   }
-
+  EditForm(){
+    this.con.edit(this.item)
+  }
   dismissModal(){
     this.ModalController.dismiss();
   }
   handleFirstNameValue(event) {
-    
-    this.item = event.target.value;
+     this.item = event.target.value;
   }
 
 }
