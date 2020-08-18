@@ -105,7 +105,17 @@ export class ProductoPage implements OnInit {
   }
   goBack() {    this.router.navigate(['/home']);      }
   Agregar(){
-    this.con.addItem(this.item);
+    let scope=this
+    this.con.addItem(this.item).then( function(){
+      console.log("Bien desde frontend");
+      scope.item.Producto="";
+      scope.item.Presentacion="";
+      
+    })
+    .catch(function(error){
+      console.log("Error"+error);
+    })
+    
   }
   delete(id){
     this.con.delete(id);

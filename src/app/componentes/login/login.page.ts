@@ -30,6 +30,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.clear();
   }
   initializeApp() {
     this.platform.ready().then(() => {
@@ -38,10 +39,10 @@ export class LoginPage implements OnInit {
     });
   }
 
-  signup() {
+ /*  signup() {
     let user = this.authService.signup(this.email, this.password);
     this.email = this.password = '';
-  }
+  } */
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Contraseña incorrecta',
@@ -55,6 +56,8 @@ export class LoginPage implements OnInit {
   login() {
     this.authService.login(this.email, this.password)
     .then(user => {
+      
+      localStorage.setItem("uid",JSON.stringify(user.user.uid) )
       console.log("Go to another page");
       this.router.navigate(['/home']);
     }).catch(error => {
@@ -68,7 +71,10 @@ export class LoginPage implements OnInit {
   }
 
   logout() {
+
+    localStorage.clear();
     this.authService.logout();
+    
   }
 
 }

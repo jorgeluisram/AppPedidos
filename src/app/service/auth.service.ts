@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
+import { AngularFirestore} from '@angular/fire/firestore'
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,25 @@ import { ToastController } from '@ionic/angular';
 export class AuthService {
   user: Observable<firebase.User>;
 
-  constructor(private firebaseAuth: AngularFireAuth,
-            public ToastControlleroller: ToastController) {
+  constructor(
+    private firebaseAuth: AngularFireAuth,
+    public ToastControlleroller: ToastController,
+    private db:AngularFirestore
+    )
+             {
     this.user = firebaseAuth.authState;
   }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string,name: string,rol: string) {
      this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(value => {
+        const uid = value.user.uid
+        this.db.collection('users').doc(uid).set({
+          name:name,
+          uid : uid,
+          rol : rol
+
+        })
         console.log('Success!', value);
         this.presentAlert('El usuario Fue creado exitosamente','true');
       })

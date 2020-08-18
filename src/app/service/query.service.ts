@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection,AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 
 export interface Item { name: string; }
 
@@ -13,10 +13,14 @@ export interface Item { name: string; }
 })
 export class QueryService {
   private itemsCollection : AngularFirestoreCollection<Item>;
+  public itemsCollection2 : AngularFirestoreCollection<Item>;
   private itemDoc         : AngularFirestoreDocument<Item>;
   items: Observable<Item[]>;
+  itemsUser: Observable<any[]>;
   constructor(private afs: AngularFirestore,
-    public toastController: ToastController) {
+    public db: AngularFirestore,
+    public toastController: ToastController,
+    public loadingController: LoadingController,) {
     this.itemsCollection = afs.collection<Item>('producto');
     //this.items = this.itemsCollection.valueChanges();
     //valueChanges cambios de los valores
@@ -32,15 +36,38 @@ export class QueryService {
   }
   ngOnInit() {
   }
+  
+  getdataUser(id){
+    debugger
+    this.itemsCollection2=this.afs.collection('users', ref => ref.where('uid', '==', id))
+
+    this.itemsUser = this.itemsCollection2.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Item;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  
+
+  }
+  retornalUser(){
+    return this.itemsUser;
+  }
   retornalItems(){
     return this.items;
   }
-  addItem(item: Item) {
+  async addItem(item: Item) {
     let scope=this
-    this.itemsCollection.add(item) .then(function(){
+      const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere' });
+      await loading.present();
+    this.itemsCollection.add(item) .then(async function(){
       console.log("bueno");
-     
+      
       scope.presentAlert('Su producto a sido agregado','true')
+      await loading.dismiss() //apagado
     })
     .catch(function(error){
       console.log("Error"+error);

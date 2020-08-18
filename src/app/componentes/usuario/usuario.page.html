@@ -3,9 +3,9 @@
     <ion-title style="text-align: center;">Administracion <br> de <br>usuarios</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button  (click)="goBack()">
         
-        <ion-icon name="arrow-back-outline" style="font-size: 40px;" (click)="goBack()"></ion-icon>
+        <ion-icon name="arrow-back-outline" style="font-size: 40px;"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -17,11 +17,13 @@
     <header></header>
     <br>
     
-      <ion-icon name="arrow-back-circle-outline" style="font-size: 50px;" (click)="goBack()"></ion-icon>
-
+   
    
   </section>
-
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input type="text" name="name" [(ngModel)]="name"></ion-input>
+  </ion-item>
   <ion-item>
     <ion-label position="floating">Correo electrónico</ion-label>
     <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>
@@ -29,6 +31,15 @@
   <ion-item>
     <ion-label position="floating">Contraseña</ion-label>
     <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Rol del usuario</ion-label>
+    <ion-select interface="popover" [(ngModel)]="rol">
+      <ion-select-option value="Administrador">Administrador</ion-select-option>
+      <ion-select-option value="Vendedor">Vendedor</ion-select-option>
+      <ion-select-option value="Cliente">Cliente</ion-select-option>
+      
+    </ion-select>
   </ion-item>
   <ion-button (click)="signup()">Agregar</ion-button>
 </ion-content>

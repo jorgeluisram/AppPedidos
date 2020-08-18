@@ -9,6 +9,8 @@ import { AuthService } from '../../service/auth.service';
 export class UsuarioPage implements OnInit {
   email: string;
   password: string;
+  name:string;
+  rol:string;
   constructor(private router: Router,
     public authService: AuthService,
     ) { }
@@ -17,10 +19,10 @@ export class UsuarioPage implements OnInit {
   }
 
   goBack() {    this.router.navigate(['/home']);      }
-  signup() {
-    this.authService.signup(this.email, this.password)
+  signup() {debugger
+    this.authService.signup(this.email, this.password,this.name,this.rol)
   
-    this.email = this.password = '';
+    this.email ='', this.password = '', this.rol = '';
   }
 
 }
