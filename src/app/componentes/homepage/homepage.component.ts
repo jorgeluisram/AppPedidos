@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { QueryService } from 'src/app/service/query.service';
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -17,7 +18,8 @@ export class HomepageComponent implements OnInit {
 
   constructor( 
     private router: Router,
-    public query:QueryService
+    public query:QueryService,
+    public loadingController: LoadingController,
     ) { }
 
   ngOnInit() {
@@ -28,7 +30,14 @@ export class HomepageComponent implements OnInit {
  
   goProduct() {this.router.navigate(['/producto']); }
   goUser() {this.router.navigate(['/usuario']); }
-  getuser(id){
+  async getuser(id){
+     //encendido
+     const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere',
+      
+    });
+    await loading.present();
     this.query.getdataUser(id);
     this.query.retornalUser().subscribe(async items=>{
       if(items.length==0){
@@ -59,12 +68,12 @@ export class HomepageComponent implements OnInit {
         default:
           break;
       }
-      debugger
+      
       }
-      
-      
+            
       //this.processdata();
       console.log(this.itemsUser)
+      await loading.dismiss() //apagado
     })
   }
 

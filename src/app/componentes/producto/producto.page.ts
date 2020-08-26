@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';//modal
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { ModalInputComponent } from '../modal-input/modal-input.component';
-
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize } from 'rxjs/operators';
+import * as firebase from "firebase";
 
 @Component({
   selector: 'app-producto',
@@ -17,12 +19,19 @@ import { ModalInputComponent } from '../modal-input/modal-input.component';
 })
 export class ProductoPage implements OnInit {
 
-
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<string>;
+  profileUrl: Observable<string | null>;
+  fb;
+  file:any;
   items:any;
   itemEdit:any={Producto:'',
                 Presentacion:''}
+                
   item:any={Producto:'',
-            Presentacion:''};
+            Presentacion:'',
+            Estado:'',
+            Imagen:''};
   closeResult: string;
  
   constructor(
@@ -32,16 +41,66 @@ export class ProductoPage implements OnInit {
     private modalService: NgbModal,
     public ModalController: ModalController,
     public loadingController: LoadingController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private storage: AngularFireStorage
     ) { 
      
     
   }
 
   ngOnInit() {
+    
     this.getdata()
     //this.presentLoading();
   }
+  onFileSelected(event) {
+    var n = Date.now();
+    const file = event.target.files[0];
+    const filePath = `RoomsImages/${n}`;
+    const fileRef = this.storage.ref(`productos/${this.item.Producto}.png`);
+    const task = this.storage.upload(`productos/${this.item.Producto}.png`,file);
+    this.uploadPercent = task.percentageChanges();
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+          this.downloadURL.subscribe(url => {
+            if (url) {
+              this.fb = url;
+            }
+            console.log(this.fb+"coso1");
+            
+          });
+        })
+      )
+      .subscribe(url => {
+        if (url) {
+          console.log(url+"coso2");
+          
+        }
+      });
+  }
+  uploadFile(event) {
+    let scope=this
+    this.file = event.target.files[0];
+    
+    const ref = this.storage.ref(`productos/${this.item.Producto}.png`);
+    const task = ref.put(this.file);
+    const perc = this.storage.upload(`productos/${this.item.Producto}.png`, this.file);
+    this.profileUrl = ref.getDownloadURL();
+    // observe percentage changes
+    this.uploadPercent = perc.percentageChanges();
+    // get notified when the download URL is available
+   
+    perc.snapshotChanges().pipe(
+      finalize(()=> this.downloadURL = ref.getDownloadURL() )
+    ).subscribe()
+    
+   
+  }
+
+  
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -74,7 +133,7 @@ export class ProductoPage implements OnInit {
   
   }
 
-  async  DeleteButton(id,product) {
+  async  DeleteButton(id,product,url) {
     const alert = await this.alertController.create({
       header: 'Eliminar Producto',
       message: 'Desea eliminar el producto "'+product+'" de la lista productos',
@@ -89,7 +148,8 @@ export class ProductoPage implements OnInit {
         }, {
           text: 'Si',
           handler: () => {
-            this.delete(id)
+            this.delete(id);
+            this.deleteImg(url);
           }
         }
       ]
@@ -106,19 +166,30 @@ export class ProductoPage implements OnInit {
   goBack() {    this.router.navigate(['/home']);      }
   Agregar(){
     let scope=this
+    
+   
+    this.item.Imagen= this.fb
     this.con.addItem(this.item).then( function(){
       console.log("Bien desde frontend");
       scope.item.Producto="";
       scope.item.Presentacion="";
-      
+      scope.file="";
+     
     })
     .catch(function(error){
       console.log("Error"+error);
     })
     
+    
+  
+    
   }
   delete(id){
     this.con.delete(id);
+   
+  }
+  deleteImg(downloadUrl) {
+    return this.storage.storage.refFromURL(downloadUrl).delete();
   }
   edit(item){
       this.itemEdit = item;

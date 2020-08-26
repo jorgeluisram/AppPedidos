@@ -19,14 +19,15 @@ export class AuthService {
     this.user = firebaseAuth.authState;
   }
 
-  signup(email: string, password: string,name: string,rol: string) {
+  signup(email: string, password: string,name: string,rol: string,firstLogin: string) {
      this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(value => {
         const uid = value.user.uid
         this.db.collection('users').doc(uid).set({
           name:name,
           uid : uid,
-          rol : rol
+          rol : rol,
+          firstLogin : firstLogin
 
         })
         console.log('Success!', value);
@@ -67,5 +68,9 @@ export class AuthService {
 
   logout() {
     this.firebaseAuth.signOut();
+  }
+
+  resetPassword(email:string){
+    return this.firebaseAuth.sendPasswordResetEmail(email);
   }
 }

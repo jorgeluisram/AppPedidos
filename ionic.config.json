@@ -1,7 +1,8 @@
 {
   "name": "appPedido",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

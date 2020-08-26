@@ -7,10 +7,11 @@ import { AuthService } from '../../service/auth.service';
   styleUrls: ['./usuario.page.scss'],
 })
 export class UsuarioPage implements OnInit {
-  email: string;
-  password: string;
-  name:string;
-  rol:string;
+  email   :string;
+  password:string;
+  name    :string;
+  rol     :string;
+  
   constructor(private router: Router,
     public authService: AuthService,
     ) { }
@@ -19,10 +20,11 @@ export class UsuarioPage implements OnInit {
   }
 
   goBack() {    this.router.navigate(['/home']);      }
-  signup() {debugger
-    this.authService.signup(this.email, this.password,this.name,this.rol)
+  signup() {
+    var firstLogin="Si"
+    this.authService.signup(this.email, this.password,this.name,this.rol,firstLogin)
   
-    this.email ='', this.password = '', this.rol = '';
+    this.email ='', this.password = '', this.rol = '', firstLogin = '';
   }
 
 }

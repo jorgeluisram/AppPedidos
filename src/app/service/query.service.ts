@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToastController, LoadingController } from '@ionic/angular';
 
+
+
+
 export interface Item { name: string; }
 
 @Injectable({
@@ -38,7 +41,7 @@ export class QueryService {
   }
   
   getdataUser(id){
-    debugger
+    
     this.itemsCollection2=this.afs.collection('users', ref => ref.where('uid', '==', id))
 
     this.itemsUser = this.itemsCollection2.snapshotChanges().pipe(

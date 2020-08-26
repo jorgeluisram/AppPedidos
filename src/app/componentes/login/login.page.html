@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <img class="icon" src="assets/icon/enlasa.png" alt="">
+  <img class="icon" src="assets/icon/Disprinsa.jpg" alt="">
   <ion-item>
     <ion-label position="floating">Correo electrónico</ion-label>
     <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>
@@ -16,6 +16,12 @@
   </ion-item>
   <br>
   <ion-button expand="block" (click)="login()" [disabled]="!email || !password">Entrar</ion-button>
+
+  <br>
+  <div style="text-align: center;">
+    <a [routerLink]="['/reset-pass']"> <small>Olvidaste tu contraseña</small></a>
+    <!--  <ion-button [routerLink]="['/reset-pass']" routerLinkActive="router-link-active"  color="warning"></ion-button> -->
+  </div>
 
 
 </ion-content>

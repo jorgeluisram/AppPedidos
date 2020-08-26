@@ -19,6 +19,18 @@ const routes: Routes = [
     path: 'usuario',
     loadChildren: () => import('./componentes/usuario/usuario.module').then( m => m.UsuarioPageModule)
   },
+  {
+    path: 'pedirproducto',
+    loadChildren: () => import('./componentes/pedirproducto/pedirproducto.module').then( m => m.PedirproductoPageModule)
+  },
+  {
+    path: 'reset-pass',
+    loadChildren: () => import('./componentes/reset-pass/reset-pass.module').then( m => m.ResetPassPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./componentes/profile/profile.module').then( m => m.ProfilePageModule)
+  },
 
 ];
 
