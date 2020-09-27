@@ -99,7 +99,7 @@ export class LoginPage implements OnInit {
       }
       
     })
-    this.email = this.password = '';
+    this.password = '';
   }
 
   logout() {

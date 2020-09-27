@@ -13,6 +13,7 @@ export class UsuarioPage implements OnInit {
   email   :string;
   password:string;
   name    :string;
+  LastName:string;
   rol     :string;
   items:any;
   
@@ -44,10 +45,10 @@ export class UsuarioPage implements OnInit {
     let firstLogin="Si"
     let Imagen= '';
     let numberPhone=''
-    let LastName='';
+    
     let adress='';
     let status='Activo';
-    this.authService.signup(this.email, this.password,this.name,this.rol,firstLogin,Imagen ,numberPhone,LastName,adress,status)
+    this.authService.signup(this.email, this.password,this.name,this.rol,firstLogin,Imagen ,numberPhone,this.LastName,adress,status)
   
     this.email ='', this.password = '', this.rol = '', firstLogin = '';
   }

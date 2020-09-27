@@ -31,6 +31,18 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./componentes/profile/profile.module').then( m => m.ProfilePageModule)
   },
+  {
+    path: 'mipedido',
+    loadChildren: () => import('./componentes/mipedido/mipedido.module').then( m => m.MipedidoPageModule)
+  },
+  {
+    path: 'pedidosgeneral',
+    loadChildren: () => import('./componentes/pedidosgeneral/pedidosgeneral.module').then( m => m.PedidosgeneralPageModule)
+  },
+  {
+    path: 'catalogo',
+    loadChildren: () => import('./componentes/catalogo/catalogo.module').then( m => m.CatalogoPageModule)
+  },
 
 ];
 

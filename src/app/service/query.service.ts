@@ -19,11 +19,16 @@ export class QueryService {
   private itemsCollectionSend : AngularFirestoreCollection<Item>;
   public itemsCollection2 : AngularFirestoreCollection<Item>;
   public userCollection : AngularFirestoreCollection<Item>;
+  public pedidoCollection : AngularFirestoreCollection<Item>;//obtener pedidos
+  public pedidoCollectionG : AngularFirestoreCollection<Item>;//obtener pedidos
   public productbyActive : AngularFirestoreCollection<Item>;
   private itemDoc         : AngularFirestoreDocument<Item>;
+  private itemPedido         : AngularFirestoreDocument<Item>;
   private itemUser         : AngularFirestoreDocument<Item>;
   items: Observable<Item[]>;
   itemsUser: Observable<any[]>;
+  itemsPedido: Observable<any[]>;//Items para pedidos
+  itemsPedidoG: Observable<any[]>;//Items para pedidos General
   itemsUserGeneral: Observable<any[]>;
   itemproductbyActive: Observable<any[]>;
   constructor(private afs: AngularFirestore,
@@ -75,6 +80,40 @@ export class QueryService {
       }))
     );
   
+  }
+  getPedido(id){
+    //Funcion para obtener el pedido del usuario segun su uid que es unico
+    debugger
+    this.pedidoCollection=this.afs.collection('pedido', ref => ref.where('iduser', '==', id))
+
+    this.itemsPedido = this.pedidoCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Item;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  
+  }
+  retornalPedidoList(){
+    return this.itemsPedido;
+  }
+  getPedidoGeneral(status){
+    //Funcion para obtener el pedido del usuario segun su uid que es unico
+    debugger
+    this.pedidoCollectionG=this.afs.collection('pedido', ref => ref.where('status', '==', status))
+
+    this.itemsPedidoG = this.pedidoCollectionG.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Item;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  
+  }
+  retornalPedidoListGeneral(){
+    return this.itemsPedidoG;
   }
   getDataUserList(){debugger
     this.itemsCollection = this.afs.collection<Item>('users');
@@ -132,6 +171,11 @@ export class QueryService {
   delete(id){
     this.itemDoc = this.afs.doc<Item>("producto/"+id);
     this.itemDoc.delete();//Funcion para borrar
+  }
+  deletePedido(id){
+    debugger
+    this.itemPedido = this.afs.doc<Item>("pedido/"+id);
+    this.itemPedido.delete();//Funcion para borrar
   }
   
   async presentAlert(message,type) {

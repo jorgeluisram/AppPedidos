@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>catalogo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  [routerLink]="['/home']">
+        <ion-icon name="arrow-back-outline" style="font-size: 40px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+  <ion-card *ngFor="let p of items; index as i">
+    <img [src]="p.Imagen" style="text-align: center;"/>
+    <ion-card-header>
+      <ion-card-subtitle>{{p.Producto}}</ion-card-subtitle>
+      <ion-card-title>{{p.Presentacion}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h3>Descripción</h3>
+          </ion-text>
+          <p>{{p.Descripcion}}</p>
+          
+        </ion-label>
+      </ion-item>
+
+      
+    </ion-card-content>
+  </ion-card>
+</ion-content>

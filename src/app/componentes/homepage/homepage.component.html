@@ -44,6 +44,23 @@
 
       </ion-row> 
       <ion-row>
+      
+
+        <ion-col>
+          <ion-card [hidden]=admon  color="secondary" style="max-width: 40rem; max-height: 20rem; text-align: center;"  [routerLink]="['/pedidosgeneral']"   >
+            <ion-card-header>
+            <ion-icon  name="file-tray-stacked-outline" style="font-size: 50px;" >
+          
+            </ion-icon>
+          </ion-card-header>
+          <ion-card-content>
+            <strong>Todos los pedidos</strong>
+          </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+      </ion-row> 
+      <ion-row>
         <!-- <ion-col>
           <ion-card [hidden]=client color="tertiary" style="max-width: 40rem; max-height: 20rem; text-align: center;" (click)="goUser()">
             <ion-card-header>
@@ -70,7 +87,58 @@
         </ion-col>
 
       </ion-row> 
- 
+      <ion-row>
+        <!-- <ion-col>
+          <ion-card [hidden]=client color="tertiary" style="max-width: 40rem; max-height: 20rem; text-align: center;" (click)="goUser()">
+            <ion-card-header>
+            <ion-icon  name="person-outline" style="font-size: 50px;"  >
+            </ion-icon>
+          </ion-card-header>
+          <ion-card-content>
+            <strong>Mi Perfil</strong>
+          </ion-card-content>
+          </ion-card>
+        </ion-col> -->
+
+        <ion-col>
+          <ion-card [hidden]=client color="warning" style="max-width: 40rem; max-height: 20rem; text-align: center;" [routerLink]="['/mipedido']">
+            <ion-card-header>
+             
+            <ion-icon  name="reader-outline" style="font-size: 50px;" >
+              
+            </ion-icon>
+          </ion-card-header>
+          <ion-card-content>
+            <strong>Ver mi Pedido</strong>
+          </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+      </ion-row> 
+      
+      <ion-row>
+      
+
+        <ion-col>
+          <ion-card [hidden]=client  color="secondary" style="max-width: 40rem; max-height: 20rem; text-align: center;"  [routerLink]="['/catalogo']"   >
+            <ion-card-header>
+             
+            <ion-icon  name="images-outline" style="font-size: 50px;" >
+          
+            </ion-icon>
+          </ion-card-header>
+          <ion-card-content>
+            <strong>Catalogo</strong>
+          </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+      </ion-row> 
 
     </ion-grid>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
   </ion-content>
