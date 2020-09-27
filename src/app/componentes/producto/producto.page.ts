@@ -18,7 +18,8 @@ import * as firebase from "firebase";
   styleUrls: ['./producto.page.scss'],
 })
 export class ProductoPage implements OnInit {
-
+  selectTabs = 'all';
+ 
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
   profileUrl: Observable<string | null>;
@@ -26,12 +27,14 @@ export class ProductoPage implements OnInit {
   file:any;
   items:any;
   itemEdit:any={Producto:'',
-                Presentacion:''}
+                Presentacion:'',
+                Descripcion:''}
                 
   item:any={Producto:'',
             Presentacion:'',
             Estado:'',
-            Imagen:''};
+            Imagen:'',
+            Descripcion:''};
   closeResult: string;
  
   constructor(
@@ -167,7 +170,6 @@ export class ProductoPage implements OnInit {
   Agregar(){
     let scope=this
     
-   
     this.item.Imagen= this.fb
     this.con.addItem(this.item).then( function(){
       console.log("Bien desde frontend");

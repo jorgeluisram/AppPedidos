@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-login',
@@ -24,13 +25,15 @@ export class LoginPage implements OnInit {
     private statusBar: StatusBar,
     public authService: AuthService,
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public loadingController: LoadingController,
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
     localStorage.clear();
+   
   }
   initializeApp() {
     this.platform.ready().then(() => {
@@ -39,10 +42,7 @@ export class LoginPage implements OnInit {
     });
   }
 
- /*  signup() {
-    let user = this.authService.signup(this.email, this.password);
-    this.email = this.password = '';
-  } */
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Contraseña incorrecta',
@@ -53,18 +53,50 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
-  login() {
-    this.authService.login(this.email, this.password)
-    .then(user => {
+  async presentAlert2() {
+    const alert = await this.alertController.create({
+      header: 'Usuario Desactivado',
+      subHeader: '',
+      message: 'Este usuario esta desactivado contacte a administración',
+      buttons: ['Cerrar']
+    });
+
+    await alert.present();
+  }
+  async login() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere',
       
+    });
+    await loading.present();
+    debugger
+    this.authService.login(this.email, this.password)
+    .then(async user => {
+      debugger
       localStorage.setItem("uid",JSON.stringify(user.user.uid) )
       console.log("Go to another page");
+      await loading.dismiss()
       this.router.navigate(['/home']);
-    }).catch(error => {
-        
+    }).catch(async error => {
+      console.log(error);
+      let nameError = error['code']
       
-      console.log("stop at login");
-      this.presentAlert()
+      debugger
+     
+      await loading.dismiss()
+
+      switch (nameError) {
+        case "auth/wrong-password":
+          this.presentAlert()
+          break;
+        
+          case "auth/user-disabled":
+            this.presentAlert2();
+            break;
+        default:
+          break;
+      }
       
     })
     this.email = this.password = '';

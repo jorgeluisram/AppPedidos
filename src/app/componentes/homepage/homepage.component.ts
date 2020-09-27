@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { QueryService } from 'src/app/service/query.service';
 import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -20,6 +21,7 @@ export class HomepageComponent implements OnInit {
     private router: Router,
     public query:QueryService,
     public loadingController: LoadingController,
+    public alertController: AlertController,
     ) { }
 
   ngOnInit() {
@@ -29,6 +31,16 @@ export class HomepageComponent implements OnInit {
   }
  
   goProduct() {this.router.navigate(['/producto']); }
+  async presentAlert2() {
+    const alert = await this.alertController.create({
+      header: 'Usuario Desactivado',
+      subHeader: '',
+      message: 'Este usuario esta desactivado contacte a administración',
+      buttons: ['Cerrar']
+    });
+
+    await alert.present();
+  }
   goUser() {this.router.navigate(['/usuario']); }
   async getuser(id){
      //encendido
@@ -45,7 +57,15 @@ export class HomepageComponent implements OnInit {
 
       }else{
       this.itemsUser=items[0].rol
-      
+      let status =items[0].status
+      let name =items[0].name
+      if(status=="Inactivo"){
+          this.presentAlert2()
+          this.router.navigate(['/login']);
+      }else{}
+      debugger
+      localStorage.setItem("Rol",JSON.stringify(this.itemsUser) )
+      localStorage.setItem("nameUser",JSON.stringify(name) )
       switch (this.itemsUser) {
         case "Administrador":
             this.admon  =false;

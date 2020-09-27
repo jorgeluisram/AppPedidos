@@ -1,30 +1,72 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
+import { QueryService } from 'src/app/service/query.service';
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.page.html',
   styleUrls: ['./usuario.page.scss'],
 })
 export class UsuarioPage implements OnInit {
+  selectTabs = 'all';
   email   :string;
   password:string;
   name    :string;
   rol     :string;
+  items:any;
   
   constructor(private router: Router,
     public authService: AuthService,
+    public query : QueryService,
+    public loadingController: LoadingController,
+    
     ) { }
 
   ngOnInit() {
+      this.getlistuser()
+    
   }
+  refresh(item:any){
+    debugger
+   
+      let itemEdit={status:item.status,
+                
+                 id:item.id}
+     this.query.editUser(itemEdit) 
+   }
 
   goBack() {    this.router.navigate(['/home']);      }
+  deleteuser(uid){debugger
+    this.authService.UpdateUser(uid)
+  }
   signup() {
-    var firstLogin="Si"
-    this.authService.signup(this.email, this.password,this.name,this.rol,firstLogin)
+    let firstLogin="Si"
+    let Imagen= '';
+    let numberPhone=''
+    let LastName='';
+    let adress='';
+    let status='Activo';
+    this.authService.signup(this.email, this.password,this.name,this.rol,firstLogin,Imagen ,numberPhone,LastName,adress,status)
   
     this.email ='', this.password = '', this.rol = '', firstLogin = '';
   }
+  async getlistuser(){
+    this.query.getDataUserList()
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere',
+      
+    });
+    await loading.present();
+    this.query.retornalUserList().subscribe(async items=>{
+      this.items=items
+      debugger
+      console.log(items)
+      await loading.dismiss() //apagado
+     debugger
+    })
+  }
+  
 
 }

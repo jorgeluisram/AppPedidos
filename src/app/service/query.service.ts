@@ -16,15 +16,23 @@ export interface Item { name: string; }
 })
 export class QueryService {
   private itemsCollection : AngularFirestoreCollection<Item>;
+  private itemsCollectionSend : AngularFirestoreCollection<Item>;
   public itemsCollection2 : AngularFirestoreCollection<Item>;
+  public userCollection : AngularFirestoreCollection<Item>;
+  public productbyActive : AngularFirestoreCollection<Item>;
   private itemDoc         : AngularFirestoreDocument<Item>;
+  private itemUser         : AngularFirestoreDocument<Item>;
   items: Observable<Item[]>;
   itemsUser: Observable<any[]>;
+  itemsUserGeneral: Observable<any[]>;
+  itemproductbyActive: Observable<any[]>;
   constructor(private afs: AngularFirestore,
     public db: AngularFirestore,
     public toastController: ToastController,
     public loadingController: LoadingController,) {
     this.itemsCollection = afs.collection<Item>('producto');
+    this.itemsCollectionSend = afs.collection<Item>('pedido');
+    
     //this.items = this.itemsCollection.valueChanges();
     //valueChanges cambios de los valores
     //Snapshot toma una captura de la imagen
@@ -39,12 +47,11 @@ export class QueryService {
   }
   ngOnInit() {
   }
-  
-  getdataUser(id){
+  getdataproductbyActive(){
     
-    this.itemsCollection2=this.afs.collection('users', ref => ref.where('uid', '==', id))
+    this.productbyActive=this.afs.collection('producto', ref => ref.where('Estado', '==', 'Activo'))
 
-    this.itemsUser = this.itemsCollection2.snapshotChanges().pipe(
+    this.itemproductbyActive = this.productbyActive.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Item;
         const id = a.payload.doc.id;
@@ -52,8 +59,38 @@ export class QueryService {
       }))
     );
   
-
   }
+  retornalproductbyActive(){
+    return this.itemproductbyActive;
+  }
+  getdataUser(id){
+    
+    this.userCollection=this.afs.collection('users', ref => ref.where('uid', '==', id))
+
+    this.itemsUser = this.userCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Item;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  
+  }
+  getDataUserList(){debugger
+    this.itemsCollection = this.afs.collection<Item>('users');
+  
+    this.itemsUserGeneral = this.itemsCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Item;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+  retornalUserList(){
+    return this.itemsUserGeneral;
+  }
+  
   retornalUser(){
     return this.itemsUser;
   }
@@ -76,6 +113,22 @@ export class QueryService {
       console.log("Error"+error);
     })
   }
+  async SendPedido(item: Item) {
+    let scope=this
+      const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere' });
+      await loading.present();
+    this.itemsCollectionSend.add(item) .then(async function(){
+      console.log("bueno");
+      
+      scope.presentAlert('Su pedido a sido agregado','true')
+      await loading.dismiss() //apagado
+    })
+    .catch(function(error){
+      console.log("Error"+error);
+    })
+  }
   delete(id){
     this.itemDoc = this.afs.doc<Item>("producto/"+id);
     this.itemDoc.delete();//Funcion para borrar
@@ -89,6 +142,28 @@ export class QueryService {
       duration: 3000
     });
     toast.present();
+  }
+  async editUser(item){
+    debugger
+    let scope=this
+    //encendido
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere' });
+      await loading.present();
+      //_____________
+    this.itemUser = this.afs.doc<Item>("users/"+item.id);
+    this.itemUser.update(item)//Actualizar
+    .then(async function(){
+      console.log("bueno")
+      await loading.dismiss() //apagado
+      scope.presentAlert('Perfil actualizado exitosamente','true')
+
+    })
+    .catch(async function(error){
+      await loading.dismiss() //apagado
+      console.log("Error"+error);
+    })
   }
   edit(item){
     let scope=this

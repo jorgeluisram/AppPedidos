@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>producto</ion-title>
+    <ion-title>ADMINISTRAR PRODUCTOS</ion-title>
     <ion-buttons slot="end">
       <ion-button  (click)="goBack()">
         <ion-icon name="arrow-back-outline" style="font-size: 40px;"></ion-icon>
@@ -9,105 +9,111 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Agregar un producto -->
+<ion-content [fullscreen]="true">
+  <ion-segment [(ngModel)]="selectTabs">
+    <ion-segment-button value="New">
+      <ion-label>NUEVO PRODUCTO</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="all">
+      <ion-label>TODOS LOS PRODUCTOS</ion-label>
+    </ion-segment-button>
+  
+  </ion-segment>
+
+  <div *ngIf="selectTabs == 'New'">
+      <!-- Agregar un producto -->
  
-  <br>
-  <ion-toolbar color="light">
-    <ion-title>Ingresar Nuevo Producto</ion-title>
- 
-    <section>
-    <ion-item>
-      <ion-label position="stacked"><strong>Ingresar Nuevo Producto</strong> </ion-label>
-      <ion-input placeholder="Nombre del producto" [(ngModel)]="item.Producto"></ion-input>
-      <ion-input placeholder="Presentacion del producto" [(ngModel)]="item.Presentacion"></ion-input>
-    </ion-item>
-    <ion-item>
-     <!--  <input type="file" > -->
-      <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
-      <!-- <div>{{ uploadPercent | async }}</div> -->
-        
-        
-    </ion-item>
+      <br>
+      <ion-toolbar color="light">
+        <ion-title>Ingresar Nuevo Producto</ion-title>
     
-    <ion-item>
-    <!--   <a [href]="downloadURL | async">{{ downloadURL | async }}</a> -->
-      
-      <ion-progress-bar color="primary" [value]="uploadPercent | async "></ion-progress-bar>
-      
-      
-    </ion-item>
-    <ion-img [src]="downloadURL | async" style="width: 200px;" ionError></ion-img>
-    <ion-item>
+        <section>
+        <ion-item>
+          <ion-label position="stacked"><strong>Ingresar Nuevo Producto</strong> </ion-label>
+          <ion-input placeholder="Nombre del producto" [(ngModel)]="item.Producto"></ion-input>
+          <ion-input placeholder="Presentacion del producto" [(ngModel)]="item.Presentacion"></ion-input>
+        </ion-item>
+        <ion-item>
+        <!--  <input type="file" > -->
+          <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
+          <!-- <div>{{ uploadPercent | async }}</div> -->
+             
+        </ion-item>
+        
+        <ion-item>
+        <!--   <a [href]="downloadURL | async">{{ downloadURL | async }}</a> -->
+          
+          <ion-progress-bar color="primary" [value]="uploadPercent | async "></ion-progress-bar>
+          
+          
+        </ion-item>
+        <ion-img [src]="downloadURL | async" style="width: 200px;" ionError></ion-img>
+        <ion-item>
 
-    </ion-item>
-    <ion-item>
-      <ion-label>Estado</ion-label>
-      <ion-select [(ngModel)]="item.Estado">
-        <ion-select-option value="Activo">Activo</ion-select-option>
-        <ion-select-option value="Inactivo">Inactivo</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-button (click)="Agregar()" [disabled]="!item.Producto || !item.Presentacion|| !item.Estado">Guardar</ion-button>
-  </section>
-  <br>
-</ion-toolbar>
-<!-- Fin Agregar un producto -->
-<!-- Mostrar un producto -->
-<ion-toolbar color="primary">
-  <ion-title>Lista de productos</ion-title>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Descripción del producto</ion-label>
+          <ion-textarea placeholder="Ingrese una descripcion" [(ngModel)]="item.Descripcion"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>Estado</ion-label>
+          <ion-select [(ngModel)]="item.Estado">
+            <ion-select-option value="Activo">Activo</ion-select-option>
+            <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-button (click)="Agregar()" [disabled]="!item.Producto || !item.Presentacion|| !item.Estado">Guardar</ion-button>
+      </section>
+      <br>
+    </ion-toolbar>
+    <!-- Fin Agregar un producto -->
+  </div>
 
-  <ion-card *ngFor="let item of items">
-    <ion-item>
-      <ion-label>{{item.Producto}}</ion-label>
-      <tr><ion-button fill="outline" slot="end"  (click)="edit(item)"  (click)="OpenModal(item)" >Editar </ion-button>
-        <!-- <ion-button color="danger" (click)="delete(item.id)">Eliminar</ion-button></tr> -->
-        <ion-button color="danger" (click)="DeleteButton(item.id,item.Producto,item.Imagen)">Eliminar</ion-button></tr>
-     </ion-item>
-    <ion-card-content>
-      <tr>
-       <td><strong>Presentacion del producto </strong>  </td> 
-      </tr>
-      <tr>
-        {{item.Presentacion}}
-      </tr>
-      <tr><td><strong>Estado del producto</strong> </td> 
-      </tr>
-      <tr>
-        {{item.Estado}}
-      </tr>
-      <tr>
-        <ion-img [src]="item.Imagen" style="width: 150px;"></ion-img>
-      </tr>
-    </ion-card-content>
-  </ion-card>
-</ion-toolbar>
-<!-- Fin mostrar un producto -->
+  <div *ngIf="selectTabs == 'all'">
+      <!-- Mostrar un producto -->
+      <ion-toolbar color="primary">
+        <ion-title>Lista de productos</ion-title>
 
-
-
-   <ng-template #mymodal let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <form (ngSubmit)="EditForm()">
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="">Producto</label>
-              <input type="text" class="form-control" name="Producto" [(ngModel)]="itemEdit.Producto">
-              <label for="">Presentacion</label>
-              <input type="text" class="form-control" name="Presentacion" [(ngModel)]="itemEdit.Presentacion">
-              
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-outline-dark" >Guardar</button>
-            <button class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
-          </div>
-        </form>
-      </ng-template>
+        <ion-card *ngFor="let item of items">
+          <ion-item>
+            
+            <tr><ion-button fill="outline" slot="end"  (click)="edit(item)"  (click)="OpenModal(item)" >Editar </ion-button>
+              <!-- <ion-button color="danger" (click)="delete(item.id)">Eliminar</ion-button></tr> -->
+              <ion-button color="danger" (click)="DeleteButton(item.id,item.Producto,item.Imagen)">Eliminar</ion-button></tr>
+          </ion-item>
+          <ion-item>
+            <strong>Nombre</strong>
+          </ion-item>
+          <ion-item>
+            
+          <ion-label>{{item.Producto}}</ion-label>
+        </ion-item>
+          <ion-card-content>
+            <tr>
+            <td><strong>Presentacion del producto </strong>  </td> 
+            </tr>
+            <tr>
+              {{item.Presentacion}}
+            </tr>
+            <tr>
+              <td><strong>Descripción del producto </strong>  </td> 
+            </tr>
+            <tr>
+              {{item.Descripcion}}
+            </tr>
+            <tr><td><strong>Estado del producto</strong> </td> 
+            </tr>
+            <tr>
+              {{item.Estado}}
+            </tr>
+            <tr>
+              <ion-img [src]="item.Imagen" style="width: 150px;"></ion-img>
+            </tr>
+          </ion-card-content>
+        </ion-card>
+      </ion-toolbar>
+      <!-- Fin mostrar un producto -->
+  </div>
 
 </ion-content>

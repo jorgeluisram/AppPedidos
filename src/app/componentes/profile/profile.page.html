@@ -1,9 +1,79 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Profile</ion-title>
+    <ion-title>Mi perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/home']" >
+        <ion-icon name="arrow-back-outline" style="font-size: 40px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+    <div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img [src]=Imagen>
+       <!--  <img *ngIf="!ImagenCarg" [src]="downloadURL | async"> -->
+      </div>
+    </div>
+  </div>
 
+  <div class="card-body">
+    <div class="user-meta ion-text-center">
+      <h3 class="playername">{{name}}</h3>
+      <h5 class="country">{{Rol}}</h5>
+  </div>
+
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="name"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Apellido</ion-label>
+    <ion-input [(ngModel)]="LastName"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Numero de telefono</ion-label>
+    <ion-input [(ngModel)]="numberPhone"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked">Direccion de entrega</ion-label>
+    <ion-textarea [(ngModel)]="adress" placeholder="Ingrese direccion de entrega de su producto"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <!--  <input type="file" > -->
+      <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
+      <!-- <div>{{ uploadPercent | async }}</div> -->
+        
+        
+    </ion-item>
+    <ion-item>
+      <!--   <a [href]="downloadURL | async">{{ downloadURL | async }}</a> -->
+        
+        <ion-progress-bar color="primary" [value]="uploadPercent | async "></ion-progress-bar>
+        
+        
+      </ion-item>
+     
+      <ion-item>
+
+      </ion-item>
+  <br>
+  <section>
+    <header></header>
+    <ion-button expand="block"  (click)="refresh()" >Guardar</ion-button>
+  </section>
+
+  <br>
+ <br>
+ <br>
+ <br>
+ <br>
+  
 </ion-content>

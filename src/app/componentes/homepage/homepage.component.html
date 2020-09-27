@@ -32,7 +32,8 @@
         <ion-col>
           <ion-card [hidden]=admon  color="danger" style="max-width: 40rem; max-height: 20rem; text-align: center;" (click)="goProduct()" >
             <ion-card-header>
-            <ion-icon  name="people-outline" style="font-size: 50px;" >
+            <ion-icon  name="file-tray-stacked-outline" style="font-size: 50px;" >
+          
             </ion-icon>
           </ion-card-header>
           <ion-card-content>
@@ -43,7 +44,7 @@
 
       </ion-row> 
       <ion-row>
-        <ion-col>
+        <!-- <ion-col>
           <ion-card [hidden]=client color="tertiary" style="max-width: 40rem; max-height: 20rem; text-align: center;" (click)="goUser()">
             <ion-card-header>
             <ion-icon  name="person-outline" style="font-size: 50px;"  >
@@ -53,12 +54,13 @@
             <strong>Mi Perfil</strong>
           </ion-card-content>
           </ion-card>
-        </ion-col>
+        </ion-col> -->
 
         <ion-col>
-          <ion-card [hidden]=client color="warning" style="max-width: 40rem; max-height: 20rem; text-align: center;" (click)="goGetProduct()" >
+          <ion-card [hidden]=client color="warning" style="max-width: 40rem; max-height: 20rem; text-align: center;" [routerLink]="['/pedirproducto']">
             <ion-card-header>
-            <ion-icon  name="leaf-outline" style="font-size: 50px;" >
+            <ion-icon  name="cart-outline" style="font-size: 50px;" >
+              
             </ion-icon>
           </ion-card-header>
           <ion-card-content>

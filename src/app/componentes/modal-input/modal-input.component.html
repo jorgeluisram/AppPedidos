@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Editar Producto</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Cancelar</ion-button>
+      <ion-button (click)="dismissModal()">X</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,6 +14,10 @@
   <ion-item>
     <ion-label position="stacked">Presentacion <ion-text color="danger">*</ion-text></ion-label>
     <ion-input required type="text" [(ngModel)]="item.Presentacion"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Descripción del producto</ion-label>
+    <ion-textarea placeholder="Ingrese una descripcion" [(ngModel)]="item.Descripcion"></ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label>Estado</ion-label>

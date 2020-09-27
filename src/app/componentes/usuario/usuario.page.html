@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title style="text-align: center;">Administracion <br> de <br>usuarios</ion-title>
+    <ion-title style="text-align: center;">ADMINSTRAR <br> USUARIOS</ion-title>
 
     <ion-buttons slot="end">
       <ion-button  (click)="goBack()">
@@ -12,34 +12,84 @@
   
 </ion-header>
 
-<ion-content>
-  <section>
-    <header></header>
-    <br>
+<ion-content [fullscreen]="true">
+  <ion-segment [(ngModel)]="selectTabs">
+    <ion-segment-button value="New">
+      <ion-icon name="person-add-outline"></ion-icon>
+      <ion-label>Nuevo usuario</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="all">
+      <ion-icon name="people-outline"></ion-icon>
+      <ion-label>Todos los usuarios</ion-label>
+    </ion-segment-button>
+   
+  </ion-segment>
+
+  <div *ngIf="selectTabs == 'New'">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" name="name" [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Rol del usuario</ion-label>
+      <ion-select interface="popover" [(ngModel)]="rol">
+        <ion-select-option value="Administrador">Administrador</ion-select-option>
+        <ion-select-option value="Vendedor">Vendedor</ion-select-option>
+        <ion-select-option value="Cliente">Cliente</ion-select-option>
+        
+      </ion-select>
+    </ion-item>
+    <ion-button (click)="signup()">Agregar</ion-button>
+  </div>
+
+  <div *ngIf="selectTabs == 'all'">
+ 
+<ion-item *ngFor="let user of items; let i = index">
+  <ion-avatar slot="start">
+    <img src={{user.Imagen}}>
+  </ion-avatar>
+  <ion-label>
     
+    <h2>Nombre de usuario</h2>
+    <h2>{{user.name}}</h2>
+    <h2>Rol del usuario</h2>
+    <h3>{{user.rol}}</h3>
+    <h2>Telefono</h2>
+    <h3>{{user.numberPhone}}</h3>
    
-   
-  </section>
-  <ion-item>
-    <ion-label position="floating">Nombre</ion-label>
-    <ion-input type="text" name="name" [(ngModel)]="name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Correo electrónico</ion-label>
-    <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Rol del usuario</ion-label>
-    <ion-select interface="popover" [(ngModel)]="rol">
-      <ion-select-option value="Administrador">Administrador</ion-select-option>
-      <ion-select-option value="Vendedor">Vendedor</ion-select-option>
-      <ion-select-option value="Cliente">Cliente</ion-select-option>
+    <ion-item>
+      <ion-label>Estado del usuario</ion-label>
+      <ion-select interface="popover" [(ngModel)]="user.status">
+        <ion-select-option value="Activo">Activo</ion-select-option>
+        <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+             
+      </ion-select>
+    </ion-item>
+    <section>
       
-    </ion-select>
-  </ion-item>
-  <ion-button (click)="signup()">Agregar</ion-button>
+      <ion-button (click)="refresh(user)" expand="block">Actualizar usuario</ion-button>
+    </section>
+  </ion-label>
+
+</ion-item>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+   
+  </div>
+
 </ion-content>
