@@ -70,10 +70,10 @@ export class LoginPage implements OnInit {
       
     });
     await loading.present();
-    debugger
+    
     this.authService.login(this.email, this.password)
     .then(async user => {
-      debugger
+      
       localStorage.setItem("uid",JSON.stringify(user.user.uid) )
       console.log("Go to another page");
       await loading.dismiss()
@@ -82,7 +82,7 @@ export class LoginPage implements OnInit {
       console.log(error);
       let nameError = error['code']
       
-      debugger
+      
      
       await loading.dismiss()
 

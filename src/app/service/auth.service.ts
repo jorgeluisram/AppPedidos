@@ -17,7 +17,7 @@ export class AuthService {
     )
              {
     this.user = firebaseAuth.authState;
-    debugger
+    
   }
 
   signup(email: string, password: string,name: string,rol: string,firstLogin: string,Imagen: String,
@@ -41,7 +41,7 @@ export class AuthService {
 
         })
         console.log('Success!', value);
-        this.presentAlert('El usuario Fue creado exitosamente','true');
+        this.presentAlert('El usuario fue creado exitosamente','true');
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -50,7 +50,7 @@ export class AuthService {
 
     
   }
-  UpdateUser(uid:string){debugger
+  UpdateUser(uid:string){
     /*  this.firebaseAuth.updateCurrentUser() 
       */
     

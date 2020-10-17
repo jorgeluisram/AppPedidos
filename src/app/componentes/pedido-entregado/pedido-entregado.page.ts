@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-
 import { QueryService } from 'src/app/service/query.service';
 
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
-@Component({
-  selector: 'app-pedidosgeneral',
-  templateUrl: './pedidosgeneral.page.html',
-  styleUrls: ['./pedidosgeneral.page.scss'],
-})
-export class PedidosgeneralPage implements OnInit {
-  
-  itemsPedido:any;
 
-  constructor(//array de pedidos
+@Component({
+  selector: 'app-pedido-entregado',
+  templateUrl: './pedido-entregado.page.html',
+  styleUrls: ['./pedido-entregado.page.scss'],
+})
+export class PedidoEntregadoPage implements OnInit {
+  itemsPedido:any;
+  constructor(
     public query : QueryService,
     public loadingController: LoadingController,
     public alertController: AlertController,
@@ -21,6 +19,7 @@ export class PedidosgeneralPage implements OnInit {
   ngOnInit() {
     this.getpedido();
   }
+
   async getpedido(){
     let scope=this
     //encendido
@@ -29,7 +28,7 @@ export class PedidosgeneralPage implements OnInit {
      message: 'Por favor espere',
    });
    await loading.present();
-      this.query.getPedidoGeneral('Enviado');
+      this.query.getPedidoGeneral('Entregado');
       this.query.retornalPedidoListGeneral().subscribe(async items=>{
         
         if(items.length==0){
@@ -92,7 +91,5 @@ deletePedido(id){
                  id:item.id}
      this.query.UpdatePedido(itemEdit) 
    }
-
-
 
 }

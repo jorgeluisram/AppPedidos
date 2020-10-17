@@ -51,7 +51,7 @@
         
       </ion-select>
     </ion-item>
-    <ion-button (click)="signup()">Agregar</ion-button>
+    <ion-button expand="block" [disabled]="!name || !LastName || !password|| !rol" (click)="signup()">Crear Usuario</ion-button>
   </div>
 
   <div *ngIf="selectTabs == 'all'">
@@ -63,7 +63,7 @@
   <ion-label>
     
     <h2>Nombre de usuario</h2>
-    <h2>{{user.name}}</h2>
+    <h2>{{user.name}}  {{user.LastName}}</h2>
     <h2>Rol del usuario</h2>
     <h3>{{user.rol}}</h3>
     <h2>Telefono</h2>

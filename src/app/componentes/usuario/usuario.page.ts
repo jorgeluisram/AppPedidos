@@ -16,7 +16,7 @@ export class UsuarioPage implements OnInit {
   LastName:string;
   rol     :string;
   items:any;
-  
+  Imagen:String ="assets/icon/Perfil.png";
   constructor(private router: Router,
     public authService: AuthService,
     public query : QueryService,
@@ -29,7 +29,7 @@ export class UsuarioPage implements OnInit {
     
   }
   refresh(item:any){
-    debugger
+    
    
       let itemEdit={status:item.status,
                 
@@ -38,7 +38,7 @@ export class UsuarioPage implements OnInit {
    }
 
   goBack() {    this.router.navigate(['/home']);      }
-  deleteuser(uid){debugger
+  deleteuser(uid){
     this.authService.UpdateUser(uid)
   }
   signup() {
@@ -62,10 +62,16 @@ export class UsuarioPage implements OnInit {
     await loading.present();
     this.query.retornalUserList().subscribe(async items=>{
       this.items=items
-      debugger
+      
+      this.items.forEach(element => {
+        if (element.Imagen==""){
+          element.Imagen=this.Imagen
+        }
+        
+      });
       console.log(items)
       await loading.dismiss() //apagado
-     debugger
+     
     })
   }
   

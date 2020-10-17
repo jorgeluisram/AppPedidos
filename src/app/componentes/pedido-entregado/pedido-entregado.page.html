@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Pedidos</ion-title>
+    <ion-title>pedidoEntregado</ion-title>
     <ion-buttons slot="end">
-      <ion-button  [routerLink]="['/home']">
+      <ion-button  [routerLink]="['/pedidosgeneral']">
         <ion-icon name="arrow-back-outline" style="font-size: 40px;"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -10,11 +10,9 @@
 </ion-header>
 
 <ion-content>
-  <br>
-  <ion-button expand="block" [routerLink]="['/pedido-entregado']" >Pedidos entregados</ion-button>
-  <br>
+  
   <ion-toolbar color="light">
-    <ion-title>Lista de pedidos pendientes</ion-title>
+    <ion-title>Lista de pedidos entregados</ion-title>
   <ion-card *ngFor="let p of itemsPedido; index as i">
     <ion-item>
     <ion-button color="danger" (click)="DeleteButton(p.id,p.nameUser)">Eliminar Pedido</ion-button>
@@ -88,3 +86,4 @@
   </ion-card>
 </ion-toolbar>
 </ion-content>
+

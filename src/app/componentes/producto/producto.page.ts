@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
+import { ViewChild } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';//modal
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { ModalInputComponent } from '../modal-input/modal-input.component';
@@ -55,8 +55,10 @@ export class ProductoPage implements OnInit {
     
     this.getdata()
     //this.presentLoading();
+    
   }
   onFileSelected(event) {
+    
     var n = Date.now();
     const file = event.target.files[0];
     const filePath = `RoomsImages/${n}`;
@@ -71,8 +73,10 @@ export class ProductoPage implements OnInit {
           this.downloadURL.subscribe(url => {
             if (url) {
               this.fb = url;
+              // Clear the input
+              event.srcElement.value = null;
             }
-            console.log(this.fb+"coso1");
+            
             
           });
         })
@@ -176,6 +180,7 @@ export class ProductoPage implements OnInit {
       scope.item.Producto="";
       scope.item.Presentacion="";
       scope.file="";
+      scope.fb ="";
      
     })
     .catch(function(error){
@@ -183,9 +188,9 @@ export class ProductoPage implements OnInit {
     })
     
     
-  
-    
   }
+
+  
   delete(id){
     this.con.delete(id);
    

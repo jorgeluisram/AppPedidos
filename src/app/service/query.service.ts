@@ -83,7 +83,7 @@ export class QueryService {
   }
   getPedido(id){
     //Funcion para obtener el pedido del usuario segun su uid que es unico
-    debugger
+    
     this.pedidoCollection=this.afs.collection('pedido', ref => ref.where('iduser', '==', id))
 
     this.itemsPedido = this.pedidoCollection.snapshotChanges().pipe(
@@ -100,7 +100,7 @@ export class QueryService {
   }
   getPedidoGeneral(status){
     //Funcion para obtener el pedido del usuario segun su uid que es unico
-    debugger
+    
     this.pedidoCollectionG=this.afs.collection('pedido', ref => ref.where('status', '==', status))
 
     this.itemsPedidoG = this.pedidoCollectionG.snapshotChanges().pipe(
@@ -115,7 +115,7 @@ export class QueryService {
   retornalPedidoListGeneral(){
     return this.itemsPedidoG;
   }
-  getDataUserList(){debugger
+  getDataUserList(){
     this.itemsCollection = this.afs.collection<Item>('users');
   
     this.itemsUserGeneral = this.itemsCollection.snapshotChanges().pipe(
@@ -173,7 +173,7 @@ export class QueryService {
     this.itemDoc.delete();//Funcion para borrar
   }
   deletePedido(id){
-    debugger
+    
     this.itemPedido = this.afs.doc<Item>("pedido/"+id);
     this.itemPedido.delete();//Funcion para borrar
   }
@@ -188,7 +188,7 @@ export class QueryService {
     toast.present();
   }
   async editUser(item){
-    debugger
+    
     let scope=this
     //encendido
     const loading = await this.loadingController.create({
@@ -202,6 +202,28 @@ export class QueryService {
       console.log("bueno")
       await loading.dismiss() //apagado
       scope.presentAlert('Perfil actualizado exitosamente','true')
+
+    })
+    .catch(async function(error){
+      await loading.dismiss() //apagado
+      console.log("Error"+error);
+    })
+  }
+  async UpdatePedido(item){
+    
+    let scope=this
+    //encendido
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor espere' });
+      await loading.present();
+      //_____________
+    this.itemUser = this.afs.doc<Item>("pedido/"+item.id);
+    this.itemUser.update(item)//Actualizar
+    .then(async function(){
+      console.log("bueno")
+      await loading.dismiss() //apagado
+      scope.presentAlert('Se actualizo el pedido','true')
 
     })
     .catch(async function(error){

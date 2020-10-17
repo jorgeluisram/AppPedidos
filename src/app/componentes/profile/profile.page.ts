@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class ProfilePage implements OnInit {
   public uid:any;
+  showaddres:Boolean=false;
   itemsUser:any;
   name:String;
   LastName:String;
@@ -34,8 +35,10 @@ export class ProfilePage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.uid= JSON.parse(localStorage.getItem("uid"))     
+    this.uid= JSON.parse(localStorage.getItem("uid"))    
+    
     this.getuser(this.uid)
+    
   }
   onFileSelected(event) {
     var n = Date.now();
@@ -53,7 +56,7 @@ export class ProfilePage implements OnInit {
             if (url) {
               this.urlPhoto = url;
               this.Imagen= this.urlPhoto
-              debugger
+              
            
             }
            
@@ -77,12 +80,15 @@ export class ProfilePage implements OnInit {
    await loading.present();
       this.query.getdataUser(id);
       this.query.retornalUser().subscribe(async items=>{
-        debugger
+        
         if(items.length==0){
          
         }else{
         this.name=items[0].name
         this.Rol=items[0].rol
+        if(this.Rol=="Cliente"){this.showaddres=true}
+        else{this.showaddres=false}
+        
         this.id=items[0].id
         this.LastName =items[0].LastName
         this.adress =items[0].adress

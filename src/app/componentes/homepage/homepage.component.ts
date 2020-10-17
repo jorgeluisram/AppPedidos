@@ -56,16 +56,19 @@ export class HomepageComponent implements OnInit {
         this.router.navigate(['/login']); 
 
       }else{
+        
       this.itemsUser=items[0].rol
       let status =items[0].status
       let name =items[0].name
+      
       if(status=="Inactivo"){
           this.presentAlert2()
           this.router.navigate(['/login']);
       }else{}
-      debugger
+      
       localStorage.setItem("Rol",JSON.stringify(this.itemsUser) )
       localStorage.setItem("nameUser",JSON.stringify(name) )
+      
       switch (this.itemsUser) {
         case "Administrador":
             this.admon  =false;
@@ -76,6 +79,8 @@ export class HomepageComponent implements OnInit {
           case "Cliente":
             this.admon  =true;
             this.client =false;
+            let adress=items[0].adress
+            localStorage.setItem("addresClient",JSON.stringify(adress) )
             //this.seller =false;
           break;
 

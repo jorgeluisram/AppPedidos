@@ -42,7 +42,7 @@
     <ion-input [(ngModel)]="numberPhone"></ion-input>
   </ion-item>
   
-  <ion-item>
+  <ion-item [hidden]=!showaddres>
     <ion-label position="stacked">Direccion de entrega</ion-label>
     <ion-textarea [(ngModel)]="adress" placeholder="Ingrese direccion de entrega de su producto"></ion-textarea>
   </ion-item>

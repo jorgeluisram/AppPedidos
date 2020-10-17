@@ -31,7 +31,7 @@ export class CatalogoPage implements OnInit {
     await loading.present();
     this.query.retornalproductbyActive().subscribe(async items=>{
       if(items.length==0){}
-      debugger
+      
       
       this.items=items;
       await loading.dismiss() //apagado
