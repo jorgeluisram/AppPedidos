@@ -16,6 +16,7 @@ export interface Item { name: string; }
 })
 export class QueryService {
   private itemsCollection : AngularFirestoreCollection<Item>;
+  private itemsCollectionUser : AngularFirestoreCollection<Item>;
   private itemsCollectionSend : AngularFirestoreCollection<Item>;
   public itemsCollection2 : AngularFirestoreCollection<Item>;
   public userCollection : AngularFirestoreCollection<Item>;
@@ -116,9 +117,9 @@ export class QueryService {
     return this.itemsPedidoG;
   }
   getDataUserList(){
-    this.itemsCollection = this.afs.collection<Item>('users');
+    this.itemsCollectionUser = this.afs.collection<Item>('users');
   
-    this.itemsUserGeneral = this.itemsCollection.snapshotChanges().pipe(
+    this.itemsUserGeneral = this.itemsCollectionUser.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Item;
         const id = a.payload.doc.id;
@@ -142,6 +143,7 @@ export class QueryService {
       cssClass: 'my-custom-class',
       message: 'Por favor espere' });
       await loading.present();
+      
     this.itemsCollection.add(item) .then(async function(){
       console.log("bueno");
       

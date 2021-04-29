@@ -56,7 +56,7 @@ export class PedidoEntregadoPage implements OnInit {
 
  async  DeleteButton(id,user) {
   const alert = await this.alertController.create({
-    header: 'Eliminar Producto',
+    header: 'Eliminar Pedido',
     message: '¿Desea eliminar el pedido de"'+user+'" de la lista de pedidos?',
     buttons: [
       {

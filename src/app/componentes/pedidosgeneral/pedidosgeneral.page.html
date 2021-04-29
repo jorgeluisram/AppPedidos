@@ -13,7 +13,7 @@
   <br>
   <ion-button expand="block" [routerLink]="['/pedido-entregado']" >Pedidos entregados</ion-button>
   <br>
-  <ion-toolbar color="light">
+  <ion-toolbar color="secondary">
     <ion-title>Lista de pedidos pendientes</ion-title>
   <ion-card *ngFor="let p of itemsPedido; index as i">
     <ion-item>
@@ -39,7 +39,9 @@
       <strong> No.pedido</strong> {{ i+1 }}<br>
      <strong>Usuario:</strong>  {{ p.nameUser }}<br>
      <strong>Cliente:</strong>  {{ p.Client }}<br>
-     <strong>NIT:</strong>  {{ p.NIT }}<br>
+     <strong>NIT:</strong>  {{ p.nit }}<br>
+     <strong>Direccion:</strong>  {{ p.Address }}<br>
+     
      <strong>Fecha de entrega:</strong>  {{ p.day }} de {{ p.month }}<br>
      <strong>Comentario:</strong>  {{ p.comment }}<br>
      <strong>Lista de productos:</strong> <br>

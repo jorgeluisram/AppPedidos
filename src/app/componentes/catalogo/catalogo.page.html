@@ -17,8 +17,9 @@
   <ion-card *ngFor="let p of items; index as i">
     <img [src]="p.Imagen" style="text-align: center;"/>
     <ion-card-header>
-      <ion-card-subtitle>{{p.Producto}}</ion-card-subtitle>
-      <ion-card-title>{{p.Presentacion}}</ion-card-title>
+   
+      <ion-card-subtitle><strong>Nombre del producto </strong> {{p.Producto}}</ion-card-subtitle>
+      <ion-card-title><strong>Presentación </strong>{{p.Presentacion}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>

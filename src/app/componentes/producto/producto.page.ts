@@ -74,7 +74,7 @@ export class ProductoPage implements OnInit {
             if (url) {
               this.fb = url;
               // Clear the input
-              event.srcElement.value = null;
+             
             }
             
             

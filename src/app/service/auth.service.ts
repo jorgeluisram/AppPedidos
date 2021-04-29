@@ -24,6 +24,7 @@ export class AuthService {
     numberPhone: String,
     LastName: String,
     adress: String,status:String) {
+      
      this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(value => {
         const uid = value.user.uid

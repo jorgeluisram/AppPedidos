@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title style="text-align: center;">ADMINSTRAR <br> USUARIOS</ion-title>
+    <ion-title style="text-align: center;">Administrar <br> usuarios</ion-title>
 
     <ion-buttons slot="end">
       <ion-button  (click)="goBack()">
@@ -62,15 +62,15 @@
   </ion-avatar>
   <ion-label>
     
-    <h2>Nombre de usuario</h2>
+    <h2><strong>Nombre de usuario</strong> </h2>
     <h2>{{user.name}}  {{user.LastName}}</h2>
-    <h2>Rol del usuario</h2>
+    <h2><strong>Rol del usuario </strong></h2>
     <h3>{{user.rol}}</h3>
-    <h2>Telefono</h2>
+    <h2><strong>Telefono</strong></h2>
     <h3>{{user.numberPhone}}</h3>
    
     <ion-item>
-      <ion-label>Estado del usuario</ion-label>
+      <ion-label><strong>Estado del usuario </strong></ion-label>
       <ion-select interface="popover" [(ngModel)]="user.status">
         <ion-select-option value="Activo">Activo</ion-select-option>
         <ion-select-option value="Inactivo">Inactivo</ion-select-option>

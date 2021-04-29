@@ -35,7 +35,7 @@ export class PedidosgeneralPage implements OnInit {
         if(items.length==0){
          
         }else{
-          
+          debugger
           this.itemsPedido = items
          /*  this.itemsPedido.forEach(element => {
             element.list.forEach(element => {
@@ -57,7 +57,7 @@ export class PedidosgeneralPage implements OnInit {
 
  async  DeleteButton(id,user) {
   const alert = await this.alertController.create({
-    header: 'Eliminar Producto',
+    header: 'Eliminar Pedido',
     message: '¿Desea eliminar el pedido de"'+user+'" de la lista de pedidos?',
     buttons: [
       {
